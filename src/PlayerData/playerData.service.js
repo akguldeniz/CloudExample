@@ -24,7 +24,33 @@ const raceResult = async ({ playerID }) => {
 
       if (seconds > 90) {
         //can be rewarded
-          
+        let goldAmount = 0
+        let diamondAmount = 0
+          if(playerData.Data.Diamond){
+
+            goldAmount = 200
+            diamondAmount = 125
+            await rewardMe({goldAmount, diamondAmount, playerID})
+
+          }else if(playerData.Data.Gold){
+
+            goldAmount = 200
+            diamondAmount = 48
+            await rewardMe({goldAmount, diamondAmount, playerID})
+            
+          }else if(playerData.Data.Silver){
+
+            goldAmount = 200
+            diamondAmount = 10
+            await rewardMe({goldAmount, diamondAmount, playerID})
+
+          }else{
+
+            goldAmount = 40
+            diamondAmount = 0
+            await rewardMe({goldAmount, diamondAmount, playerID})
+
+          }
       } else {
 
         //flag as cheater
@@ -116,7 +142,10 @@ const updateXP = async ({ playerID, polePosition }) =>{
 
 }
 
-
+const rewardMe = async ({ goldAmount, diamondAmount, playerID }) =>{
+  await playfab.service.updateGold({ goldAmount, playerID })
+  await playfab.service.updateDiamond({ diamondAmount, playerID })
+} 
 
 module.exports = {
   raceResult, checkWallet, removeWallet, updateXP

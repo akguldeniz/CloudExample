@@ -141,7 +141,6 @@ const updateDiamond = async({diamondAmount, playerID }) => {
         })                
         const returnData = result.data;        
         return returnData;     
-        
 
     } catch (error) {
         throw error
