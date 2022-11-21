@@ -120,9 +120,63 @@ const updateXp = async({playerID, xp}) => {
     }
 }
 
+const updateGold = async({playerID, gold}) => {    
+    try {
+        const data={                
+            Amount : gold,                   
+            PlayFabId : playerID,
+            VirtualCurrency : "AU"
+        }
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",
+            data,
+            url: "/Server/AddUserVirtualCurrency"
+        })                
+        const returnData = result.data;        
+        return returnData;     
+        
+
+    } catch (error) {
+        if (error.response && error.response.status === HttpCode.BAD_REQUEST)
+            throw new ClientError(error.response.data.message, error.response.data.code)
+        else if (error.response && error.response.status === HttpCode.NOT_FOUND)
+            throw new ClientError("User not found!", "USER_NOT_FOUND")
+        throw error
+    }
+}
+
+const updateDiamond = async({playerID, diamond}) => {    
+    try {
+        const data={                
+            Amount : diamond,                   
+            PlayFabId : playerID,
+            VirtualCurrency : "DM"
+        }
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",
+            data,
+            url: "/Server/AddUserVirtualCurrency"
+        })                
+        const returnData = result.data;        
+        return returnData;     
+        
+
+    } catch (error) {
+        if (error.response && error.response.status === HttpCode.BAD_REQUEST)
+            throw new ClientError(error.response.data.message, error.response.data.code)
+        else if (error.response && error.response.status === HttpCode.NOT_FOUND)
+            throw new ClientError("User not found!", "USER_NOT_FOUND")
+        throw error
+    }
+}
+
 module.exports = {
     detail,
     __updateLastRewarded,
     _markAsCheater,
-    updateXp
+    updateXp,
+    updateGold,
+    updateDiamond
 }

@@ -13,7 +13,8 @@ const raceResult = async ({ playerID }) => {
     // if this is first reward
     if (!playerData.Data.lastRewarded) {
 
-      const updateReward = await playfab.service.__updateLastRewarded({ playerID })
+      await playfab.service.__updateLastRewarded({ playerID })
+      await rewardAmount({ playerData, playerID })
 
     } else {
 
@@ -22,12 +23,14 @@ const raceResult = async ({ playerID }) => {
       const diff = Date.now() - unixTimeZero;
       const seconds = diff / 1000;
 
-      if (seconds > 90) {
-        //can be rewarded
-          
-      } else {
+      if (seconds > 90) {  //can be rewarded
 
-        //flag as cheater
+        await playfab.service.__updateLastRewarded({ playerID })
+        await rewardAmount({ playerData, playerID })
+
+      } else {  //flag as cheater
+
+       
         const cheater = await playfab.service._markAsCheater({ playerID })
         response = cheater
 
@@ -116,7 +119,26 @@ const updateXP = async ({ playerID, polePosition }) =>{
 
 }
 
+const rewardAmount = async ({ playerData, playerID }) =>{
+  var gold = 0;
+  var diamond = 0;
+  if(playerData.Data.Diamond){
+    gold = 200;
+    diamond = 125;
+  }else if(playerData.Data.Gold){
+    gold = 200;
+    diamond = 48;
+  }else if(playerData.Data.Silver){
+    gold = 200;
+    diamond = 10;
+  }else{
+    gold = 40;
+  }
 
+  playfab.service.updateGold({ playerID, gold })
+  playfab.service.updateDiamond({ playerID, diamond })
+
+}
 
 module.exports = {
   raceResult, checkWallet, removeWallet, updateXP

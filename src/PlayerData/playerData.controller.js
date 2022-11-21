@@ -5,7 +5,7 @@ const service = require("./playerData.service")
 
 const raceResult = async (req, res, next) => {
     try {
-        const code = await service.raceResult({ playerID: req.params.playerID })
+        const code = await service.raceResult({ ...req.body })
         return res.status(HttpCode.OK).send(code)
     } catch (error) {
         return next(error)
@@ -43,7 +43,7 @@ const updatePlayerXp = async (req, res, next) => {
 // ... Define routes
 module.exports = ({ router }) => {
 
-    router.get("/detail/:playerID", raceResult)
+    router.post("/detail/win", raceResult)
     router.post("/check/wallet", checkWallet)
     router.post("/remove/wallet", removeWallet)
     router.post("/update/xp", updatePlayerXp)
