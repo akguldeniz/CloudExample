@@ -141,5 +141,5 @@ const rewardAmount = async ({ playerData, playerID }) =>{
 }
 
 module.exports = {
-  raceResult, checkWallet, removeWallet, updateXP
+  raceResult, checkWallet, removeWallet, updateXP, spinFortuneWheel
 }

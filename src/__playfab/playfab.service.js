@@ -29,10 +29,6 @@ const detail = async ({ playerID }) => {
         return result.data.data
         
     } catch (error) {
-        if (error.response && error.response.status === HttpCode.BAD_REQUEST)
-            throw new ClientError(error.response.data.message, error.response.data.code)
-        else if (error.response && error.response.status === HttpCode.NOT_FOUND)
-            throw new ClientError("User not found!", "USER_NOT_FOUND")
         throw error
     }
 }
@@ -58,10 +54,6 @@ const __updateLastRewarded = async({playerID}) => {
         
 
     } catch (error) {
-        if (error.response && error.response.status === HttpCode.BAD_REQUEST)
-            throw new ClientError(error.response.data.message, error.response.data.code)
-        else if (error.response && error.response.status === HttpCode.NOT_FOUND)
-            throw new ClientError("User not found!", "USER_NOT_FOUND")
         throw error
     }
 }
@@ -85,10 +77,6 @@ const _markAsCheater = async({playerID}) => {
         
 
     } catch (error) {
-        if (error.response && error.response.status === HttpCode.BAD_REQUEST)
-            throw new ClientError(error.response.data.message, error.response.data.code)
-        else if (error.response && error.response.status === HttpCode.NOT_FOUND)
-            throw new ClientError("User not found!", "USER_NOT_FOUND")
         throw error
     }
 }
@@ -112,10 +100,49 @@ const updateXp = async({playerID, xp}) => {
         
 
     } catch (error) {
-        if (error.response && error.response.status === HttpCode.BAD_REQUEST)
-            throw new ClientError(error.response.data.message, error.response.data.code)
-        else if (error.response && error.response.status === HttpCode.NOT_FOUND)
-            throw new ClientError("User not found!", "USER_NOT_FOUND")
+        throw error
+    }
+}
+
+const updateGold = async({goldAmount, playerID }) => {    
+    try {
+        const data={             
+            Amount : goldAmount,          
+            PlayFabId : playerID,    
+            VirtualCurrency : "AU"
+        }
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",
+            data,
+            url: "/Server/AddUserVirtualCurrency"
+        })                
+        const returnData = result.data;        
+        return returnData;     
+        
+
+    } catch (error) {
+        throw error
+    }
+}
+
+const updateDiamond = async({diamondAmount, playerID }) => {    
+    try {
+        const data={             
+            Amount : diamondAmount,          
+            PlayFabId : playerID,    
+            VirtualCurrency : "DM"
+        }
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",
+            data,
+            url: "/Server/AddUserVirtualCurrency"
+        })                
+        const returnData = result.data;        
+        return returnData;     
+
+    } catch (error) {
         throw error
     }
 }
