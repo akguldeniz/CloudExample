@@ -142,20 +142,89 @@ const rewardAmount = async ({ playerData, playerID }) =>{
 
 const spinFortuneWheel = async ({ playerID }) =>{
   
+  const playerData = await playfab.service.detail({ playerID })
+
+  if (!playerData.Data.fortuneTime) {
+
+    
+    await playfab.service.updateFortuneWheel({ playerID })     
+    return spintheWheel()   
+
+  }else{
+
+      const timestr = playerData.Data.fortuneTime.LastUpdated.toString();
+      const unixTimeZero = Date.parse(timestr);
+      const diff = Date.now() - unixTimeZero;
+      const seconds = diff / 1000;
+
+    if(seconds > 86400){
+      
+      await playfab.service.updateFortuneWheel({ playerID })    
+      return spintheWheel()     
+
+    }else{
+
+      return "667 : Spin Force Detected"
+
+    }
+  }
+  
+}
+
+const spintheWheel = async () =>{
   var points = [100,250,500,100]
-  var weights = [32,65,97,100]
-  var random = Math.random() * 101;
-  return  String(random.toString());
-  var point = 100;
-  for(var i = 0; i<weights.length; i++){
-    if(random <= weights[i]){
-      point = points[i];
-      break;
+      var weights = [32,65,97,100]
+      var random = Math.random() * 101;  
+      var point = 100;
+      for(var i = 0; i<weights.length; i++){
+        if(random <= weights[i]){
+          point = points[i];
+          break;
+        }
+      }
+
+      var multiplers = [1,2,3]
+      var _weights = [40,80,100]
+      var mRandom = Math.random() * 101;  
+      var multipler = 1;
+      for(var i = 0; i<_weights.length; i++){
+        if(mRandom <= _weights[i]){
+          multipler = multiplers[i];
+          break;
+        }
+      }
+
+      return "g_" + String(point.toString()) + "#<-split->#" + "m_" + String(multipler.toString());   
+}
+
+const checkFortuneWheel = async ({ playerID }) =>{
+  
+  const playerData = await playfab.service.detail({ playerID })
+
+  if (!playerData.Data.fortuneTime) {
+
+    return "888 : Good luck, can be spin"
+
+  }else{
+
+      const timestr = playerData.Data.fortuneTime.LastUpdated.toString();
+      const unixTimeZero = Date.parse(timestr);
+      const diff = Date.now() - unixTimeZero;
+      const seconds = diff / 1000;
+
+    if(seconds > 86400){
+      
+      return "888 : Good luck, can be spin"
+
+    }else{
+
+      return "666 : Bad luck, can't spin. Remaining time in sec: " + String((86400 - seconds).toString())
+
     }
   }
   
 }
 
 module.exports = {
-  raceResult, checkWallet, removeWallet, updateXP, spinFortuneWheel
+  raceResult, checkWallet, removeWallet, updateXP, spinFortuneWheel, checkFortuneWheel
 }

@@ -43,7 +43,16 @@ const updatePlayerXp = async (req, res, next) => {
 const spinFortuneWheel = async (req, res, next) => {
     try {
         const code = await service.spinFortuneWheel({ ...req.body })
-        return res.status(HttpCode.OK).sendStatus(code)
+        return res.status(HttpCode.OK).send(code)
+    } catch (error) {
+        return next(error)
+    }
+}
+
+const checkFortuneWheel = async (req, res, next) => {
+    try {
+        const code = await service.checkFortuneWheel({ ...req.body })
+        return res.status(HttpCode.OK).send(code)
     } catch (error) {
         return next(error)
     }
@@ -57,6 +66,8 @@ module.exports = ({ router }) => {
     router.post("/remove/wallet", removeWallet)
     router.post("/update/xp", updatePlayerXp)
     router.post("/spin/wheel", spinFortuneWheel)
+    router.post("/check/wheel", checkFortuneWheel)
+
     return router
 }
 

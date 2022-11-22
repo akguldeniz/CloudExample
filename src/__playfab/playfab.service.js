@@ -34,6 +34,29 @@ const detail = async ({ playerID }) => {
 }
 
 
+const updateFortuneWheel = async({playerID}) => {    
+    try {
+        
+        const data={                       
+            PlayFabId : playerID,    
+            Data:{
+                "fortuneTime": Date.now().toString()
+            }
+        }
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",
+            data,
+            url: "/Admin/UpdateUserInternalData"
+        })                
+        const returnData = result.data;        
+
+    } catch (error) {
+        throw error
+    }
+}
+
+
 
 const __updateLastRewarded = async({playerID}) => {    
     try {
@@ -164,5 +187,6 @@ module.exports = {
     _markAsCheater,
     updateXp,
     updateGold,
-    updateDiamond
+    updateDiamond,
+    updateFortuneWheel
 }
