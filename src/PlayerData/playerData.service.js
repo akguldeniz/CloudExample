@@ -140,6 +140,22 @@ const rewardAmount = async ({ playerData, playerID }) =>{
 
 }
 
+const spinFortuneWheel = async ({ playerID }) =>{
+  
+  var points = [100,250,500,100]
+  var weights = [32,65,97,100]
+  var random = Math.random() * 101;
+  return  String(random.toString());
+  var point = 100;
+  for(var i = 0; i<weights.length; i++){
+    if(random <= weights[i]){
+      point = points[i];
+      break;
+    }
+  }
+  
+}
+
 module.exports = {
   raceResult, checkWallet, removeWallet, updateXP, spinFortuneWheel
 }

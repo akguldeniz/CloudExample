@@ -104,48 +104,7 @@ const updateXp = async({playerID, xp}) => {
     }
 }
 
-const updateGold = async({goldAmount, playerID }) => {    
-    try {
-        const data={             
-            Amount : goldAmount,          
-            PlayFabId : playerID,    
-            VirtualCurrency : "AU"
-        }
-        const result = await axios({
-            baseURL, headers,            
-            method: "POST",
-            data,
-            url: "/Server/AddUserVirtualCurrency"
-        })                
-        const returnData = result.data;        
-        return returnData;     
-        
 
-    } catch (error) {
-        throw error
-    }
-}
-
-const updateDiamond = async({diamondAmount, playerID }) => {    
-    try {
-        const data={             
-            Amount : diamondAmount,          
-            PlayFabId : playerID,    
-            VirtualCurrency : "DM"
-        }
-        const result = await axios({
-            baseURL, headers,            
-            method: "POST",
-            data,
-            url: "/Server/AddUserVirtualCurrency"
-        })                
-        const returnData = result.data;        
-        return returnData;     
-
-    } catch (error) {
-        throw error
-    }
-}
 
 const updateGold = async({playerID, gold}) => {    
     try {
