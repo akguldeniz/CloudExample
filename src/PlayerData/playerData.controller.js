@@ -12,6 +12,14 @@ const raceResult = async (req, res, next) => {
     }
 }
 
+const addWallet = async (req, res, next) => {
+    try {
+        const code = await service.addWallet({ ...req.body })
+        return res.status(HttpCode.OK).send(code)
+    } catch (error) {
+        return next(error)
+    }
+}
 
 const checkWallet = async (req, res, next) => {
     try {
@@ -63,6 +71,7 @@ module.exports = ({ router }) => {
 
     router.post("/detail/win", raceResult)
     router.post("/check/wallet", checkWallet)
+    router.post("/add/wallet", addWallet)
     router.post("/remove/wallet", removeWallet)
     router.post("/update/xp", updatePlayerXp)
     router.post("/spin/wheel", spinFortuneWheel)

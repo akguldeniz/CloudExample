@@ -5,8 +5,8 @@ const { ClientError } = require("../__helpers/errors")
 const { HttpCode } = require("../__helpers/types")
 
 // ... Globals
-const baseURL = process.env.PLAYFAB_HOST
-const playfab_secret_key = process.env.PLAYFAB_SECRET_KEY
+const baseURL = "https://54614.playfabapi.com"
+const playfab_secret_key = "NXESMPDW7G57NO8GUT8GG4ARPA8TSYJEJ17JGGMHER7KZ3J58F"
 const headers = {
     "Content-Type": "application/json",
     "X-SecretKey":playfab_secret_key
@@ -41,6 +41,29 @@ const updateFortuneWheel = async({playerID}) => {
             PlayFabId : playerID,    
             Data:{
                 "fortuneTime": Date.now().toString()
+            }
+        }
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",
+            data,
+            url: "/Admin/UpdateUserInternalData"
+        })                
+        const returnData = result.data;        
+
+    } catch (error) {
+        throw error
+    }
+}
+
+
+const updateWalletOnPlayfab = async({playerID, walletAdress}) => {    
+    try {
+        
+        const data={                       
+            PlayFabId : playerID,    
+            Data:{
+                "walletAdress": walletAdress
             }
         }
         const result = await axios({
@@ -188,5 +211,6 @@ module.exports = {
     updateXp,
     updateGold,
     updateDiamond,
-    updateFortuneWheel
+    updateFortuneWheel,
+    updateWalletOnPlayfab
 }

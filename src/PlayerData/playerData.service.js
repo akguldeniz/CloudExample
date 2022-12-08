@@ -42,6 +42,14 @@ const raceResult = async ({ playerID }) => {
  return response
 }
 
+const addWallet = async ({ playerID, walletAdress }) =>{
+  const playerData = await playfab.service.detail({ playerID })
+
+  
+  await playfab.service.updateWalletOnPlayfab({ playerID, walletAdress})
+  return String("tmp101 : wallet address updated");
+}
+
 const checkWallet = async ({ walletId, playerId }) => {
 
   const fs = require("fs");
@@ -226,5 +234,5 @@ const checkFortuneWheel = async ({ playerID }) =>{
 }
 
 module.exports = {
-  raceResult, checkWallet, removeWallet, updateXP, spinFortuneWheel, checkFortuneWheel
+  raceResult, checkWallet, removeWallet, updateXP, spinFortuneWheel, checkFortuneWheel, addWallet
 }
