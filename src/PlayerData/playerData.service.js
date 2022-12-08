@@ -45,7 +45,7 @@ const raceResult = async ({ playerID }) => {
 const checkWallet = async ({ walletId, playerId }) => {
 
   const fs = require("fs");
-  var data = fs.readFileSync("src/PlayerData/wallet.json");    
+  var data = fs.readFileSync("https://firebasestorage.googleapis.com/v0/b/tagrun.appspot.com/o/wallet.json?alt=media&token=89b53447-7f63-44f1-8bc7-0605a6549cb1");    
   var myObject = JSON.parse(data);
 
   var _str = new String();
@@ -62,7 +62,7 @@ const checkWallet = async ({ walletId, playerId }) => {
   
     var newData2 = JSON.stringify(myObject);
     
-    fs.writeFile("src/PlayerData/wallet.json", newData2, (err) =>{
+    fs.writeFile("https://firebasestorage.googleapis.com/v0/b/tagrun.appspot.com/o/wallet.json?alt=media&token=89b53447-7f63-44f1-8bc7-0605a6549cb1", newData2, (err) =>{
       if(err) throw err;
          
         
@@ -79,7 +79,7 @@ const checkWallet = async ({ walletId, playerId }) => {
 
 const removeWallet = async ({ playerId }) =>{
   const fs = require("fs");
-  var data = fs.readFileSync("src/PlayerData/wallet.json");    
+  var data = fs.readFileSync("https://firebasestorage.googleapis.com/v0/b/tagrun.appspot.com/o/wallet.json?alt=media&token=89b53447-7f63-44f1-8bc7-0605a6549cb1");    
   var myObject = JSON.parse(data);
 
   var searchObject = myObject.find(x=>x.playerID == playerId);
@@ -90,7 +90,7 @@ const removeWallet = async ({ playerId }) =>{
     
     var newData2 = JSON.stringify(myObject);
     
-    fs.writeFile("src/PlayerData/wallet.json", newData2, (err) =>{
+    fs.writeFile("https://firebasestorage.googleapis.com/v0/b/tagrun.appspot.com/o/wallet.json?alt=media&token=89b53447-7f63-44f1-8bc7-0605a6549cb1", newData2, (err) =>{
       if(err) throw err;
       
       console.log("Item Removed");    
@@ -203,7 +203,7 @@ const checkFortuneWheel = async ({ playerID }) =>{
 
   if (!playerData.Data.fortuneTime) {
 
-    return "888 : Good luck, can be spin"
+    return "888 : Good luck, can spin"
 
   }else{
 
@@ -214,7 +214,7 @@ const checkFortuneWheel = async ({ playerID }) =>{
 
     if(seconds > 86400){
       
-      return "888 : Good luck, can be spin"
+      return "888 : Good luck, can spin"
 
     }else{
 

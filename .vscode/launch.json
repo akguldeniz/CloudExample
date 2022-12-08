@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\server.js",
+            "env": {
+                "PORT": 8080,
+                "PLAYFAB_HOST": "https://54614.playfabapi.com",
+                "PLAYFAB_SECRET_KEY": "NXESMPDW7G57NO8GUT8GG4ARPA8TSYJEJ17JGGMHER7KZ3J58F"
+            }
+        }    
+    ]
+    
+}
