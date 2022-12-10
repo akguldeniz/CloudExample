@@ -79,6 +79,20 @@ const updateWalletOnPlayfab = async({playerID, walletAdress}) => {
     }
 }
 
+const getTime = async() => {
+    try {
+       
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",            
+            url: "/Server/GetTime"
+        })                
+        return result.data.data.Time;        
+
+    } catch (error) {
+        throw error
+    }
+}
 
 
 const __updateLastRewarded = async({playerID}) => {    
@@ -212,5 +226,6 @@ module.exports = {
     updateGold,
     updateDiamond,
     updateFortuneWheel,
-    updateWalletOnPlayfab
+    updateWalletOnPlayfab,
+    getTime
 }
