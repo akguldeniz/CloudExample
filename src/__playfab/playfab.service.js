@@ -154,9 +154,31 @@ const updateXp = async({playerID, xp}) => {
             method: "POST",
             data,
             url: "/Admin/UpdateUserInternalData"
-        })                
-        const returnData = result.data;        
+        })      
+        const returnData = result.data;       
+        await updateXpReadOnly({ playerID, xp})
         return returnData;     
+        
+
+    } catch (error) {
+        throw error
+    }
+}
+
+const updateXpReadOnly = async({playerID, xp}) => {    
+    try {
+        const data={                       
+            PlayFabId : playerID,    
+            Data:{
+                "xp":xp
+            }
+        }
+        const result = await axios({
+            baseURL, headers,            
+            method: "POST",
+            data,
+            url: "/Admin/UpdateUserReadOnlyData"
+        })              
         
 
     } catch (error) {
@@ -180,7 +202,7 @@ const updateGold = async({playerID, gold}) => {
             url: "/Server/AddUserVirtualCurrency"
         })                
         const returnData = result.data;        
-        return returnData;     
+        //return returnData;     
         
 
     } catch (error) {
