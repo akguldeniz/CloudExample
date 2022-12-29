@@ -2,6 +2,7 @@
 const { json } = require("body-parser")
 const { debug } = require("console")
 const playfab = require("../__playfab")
+const { updateGold } = require("../__playfab/playfab.service")
 const testJson = require("./wallet.json")
 
 const raceResult = async ({ playerID, polePosition }) => {
@@ -28,7 +29,7 @@ const raceResult = async ({ playerID, polePosition }) => {
       console.log(time.toString() + "---" + Date.now().toString())
       const seconds = diff / 1000;
       console.log(seconds)
-      if (seconds > 90) {  //can be rewarded
+      if (seconds > 60) {  //can be rewarded
 
         
         response = await updateXP({playerID, polePosition, playerData})
@@ -160,7 +161,7 @@ const rewardAmount = async ({ playerData, playerID, xpRewarded, polePosition }) 
   await playfab.service.updateGold({ playerID, gold })
   await playfab.service.updateDiamond({ playerID, diamond })
 
-  return gold.toString() + "-" + diamond.toString() + "-" + xpRewarded.toString()
+  //return gold.toString() + "-" + diamond.toString() + "-" + xpRewarded.toString()
 
   return String(gold.toString() + "-" + diamond.toString() + "-" + xpRewarded.toString());
 
@@ -174,7 +175,7 @@ const spinFortuneWheel = async ({ playerID }) =>{
 
     
     await playfab.service.updateFortuneWheel({ playerID })     
-    return spintheWheel()   
+    return spintheWheel({ playerID })    
 
   }else{
 
@@ -186,7 +187,7 @@ const spinFortuneWheel = async ({ playerID }) =>{
     if(seconds > 86400){
       
       await playfab.service.updateFortuneWheel({ playerID })    
-      return spintheWheel()     
+      return spintheWheel({ playerID })     
 
     }else{
 
@@ -197,7 +198,7 @@ const spinFortuneWheel = async ({ playerID }) =>{
   
 }
 
-const spintheWheel = async () =>{
+const spintheWheel = async ({ playerID }) =>{
   let points = [100,250,500,100]
   let weights = [32,65,97,100]
       let random = Math.random() * 101;  
@@ -220,7 +221,12 @@ const spintheWheel = async () =>{
         }
       }
 
+      let gold = multipler * point;
+      await playfab.service.updateGold({ playerID, gold })
+      
       return "g_" + String(point.toString()) + "#<-split->#" + "m_" + String(multipler.toString());   
+
+
 }
 
 const checkFortuneWheel = async ({ playerID }) =>{
